@@ -1,0 +1,36 @@
+﻿@model kurs0._7.Models.IndexViewModel
+@{
+    ViewBag.Title = "Управление";
+}
+@using Microsoft.AspNet.Identity
+
+
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div class="col-md-4">
+    <h2>@ViewBag.Title.</h2>
+    <h4>Изменение параметров учетной записи</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Пароль:</dt>
+        <dd>
+            [
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("Смена пароля", "ChangePassword")
+            }
+            else
+            {
+                @Html.ActionLink("Создать", "SetPassword")
+            }
+            ]
+        </dd>
+    </dl>
+</div>
+@if (User.IsInRole("User"))
+{
+    <div class="col-md-8 userorders">
+        @Html.Action("UserOrders", "Orders", new { @uname = User.Identity.GetUserName() })
+    </div>
+}
+<div class="clearfix"></div>

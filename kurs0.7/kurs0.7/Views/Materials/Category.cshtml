@@ -1,0 +1,52 @@
+﻿@model IEnumerable<kurs0._7.Materials>
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Index";
+    int i;
+}
+@if (User.IsInRole("Administrator"))
+{
+    <p>
+        @Html.ActionLink("Добавить", "Create")
+    </p>
+}
+@foreach (var item in Model)
+{
+    <div class="col-md-3">
+        <img src="@Html.DisplayFor(modelItem => item.images)" style="width:100%" />
+    </div>
+            <div class="col-md-8">
+                <p style="font-size: 150%; " align="left">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </p>
+                <p align="justify">@Html.DisplayFor(modelItem => item.Description)</p>
+                @if (item.Count > 0)
+                {
+
+                    i = item.Count - item.Reserved;
+                    <p><strong> на складе: @i  @Html.DisplayFor(modelItem => item.Units)</strong></p>
+                    <p style="color: red; font-size: 140%">@Html.DisplayFor(modelItem => item.Price) &#x584;</p>
+                    if(Request.IsAuthenticated)
+                    {
+                        <div style="float: left; margin-right: 5px;">
+                            @using (Html.BeginForm("AddToCart", "Cart"))
+                            {
+                                @Html.ActionLink("Добавить в корзину", "../Cart/AddToCart", new { id = item.Id, returnUrl = Request.Url.PathAndQuery, Count = Request.Url.PathAndQuery }, new { @class = "btn btn-primary" })
+                            }
+                        </div>
+                    }
+                }
+                @if (item.Count == 0)
+                {
+                    <p style="color: red; font-size: 140%">Нет в наличии</p>
+                }
+
+
+                <div style="float: left;">
+                    @Html.ActionLink("Подробнее", "Details", new { id = item.Id }, new { @class = "btn btn-primary" })
+                </div>
+
+            </div>
+            <div class="clearfix"></div>
+            <hr />
+}

@@ -1,0 +1,89 @@
+﻿@model kurs0._7.Orders
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+<div class="col-md-5">
+    <div>
+        <h4>Orders</h4>
+        <hr />
+        <dl class="dl-horizontal">
+        @if (User.IsInRole("Manager"))
+        {
+            <dt>
+                Пользователь:
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Client)
+            </dd>
+        }
+            <dt>
+                Дата:
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Date)
+            </dd>
+
+            <dt>
+                Телефон:
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Telephone)
+            </dd>
+
+            <dt>
+                Состояние:
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.States.Name)
+            </dd>
+            <dt>
+                Сумма:
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+
+        </dl>
+    </div>
+    @if(User.IsInRole("Manager"))
+    {
+        if (Model.State == 1)
+        {
+        <div class="col-md-6">
+            <a href=@Url.Action("Confirm", "Orders", new { id = Model.Id }) class="btn btn-success">
+                Принять
+            </a>
+        </div>
+        <div class="col-md-6">
+            <a href=@Url.Action("Reject", "Orders", new { id = Model.Id }) class="btn btn-danger">
+                Отклонить
+            </a>
+        </div>
+        }
+    <p>
+        @Html.ActionLink("Назад", "Index", null, new { @class= "btn btn-primary" })
+    </p>
+    }
+    @if (User.IsInRole("User"))
+    {
+        <p>
+            <a href=@Url.Action("Index", "Manage", null) class="btn btn-primary">
+                Назад
+            </a>
+        </p>
+    }
+</div>
+<div class="col-md-7">
+    <h4>Товары</h4>
+    <hr />
+    @Html.Action("Items", "Orders")
+</div>
+<div class="clearfix"></div>

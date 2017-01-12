@@ -1,0 +1,29 @@
+﻿@model kurs0._7.Models.Cart
+
+<div class="navbar-right">
+    <script type="text/javascript">
+        $(document).ready(function(){
+          $(".dropdown-toggle-js").dropdown();
+        });
+    </script>
+    <div class="btn-group">
+        
+        <a href=@Url.Action("Index", "Cart", new {  returnUrl = Request.Url.PathAndQuery  })
+           class="btn btn-default navbar-btn">
+            <span class="glyphicon glyphicon-shopping-cart"></span>
+        </a>
+        <a href="#" data-toggle="dropdown" style="vertical-align: middle;" class="btn btn-default navbar-btn dropdown-toggle-js">
+            <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li style="text-align:center;">
+                @Model.Lines.Sum(x => x.Quantity) товаров, @Model.ComputeTotalValue().ToString("# руб")
+            </li>
+            <li>
+                <a href=@Url.Action("Index", "Cart", new {  returnUrl = Request.Url.PathAndQuery  })>
+                    Перейти в корзину
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

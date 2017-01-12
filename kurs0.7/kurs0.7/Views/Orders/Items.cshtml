@@ -1,0 +1,24 @@
+﻿@model IEnumerable<kurs0._7.OrderItems>
+
+<table class="table">
+    <tr>
+        <th>
+            Кол-во
+        </th>
+        <th>
+            Товар
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Count)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Materials.Name)
+        </td>
+    </tr>
+}
+
+</table>

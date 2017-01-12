@@ -1,0 +1,15 @@
+﻿@model kurs0._7.Categories
+
+@{
+    ViewBag.Title = "Index";
+    int i = Model.Id;
+}
+
+<div class="col-md-3">
+    @Html.Action("Categories")
+</div>
+<div class="col-md-9">
+    <h3>@Html.DisplayFor(model => model.Name)</h3>
+    <p>@Html.DisplayFor(model => model.Description)</p>
+    @Html.Action("Category", new { id = @i })
+</div>у

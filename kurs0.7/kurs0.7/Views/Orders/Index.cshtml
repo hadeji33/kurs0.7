@@ -1,0 +1,56 @@
+﻿@model IEnumerable<kurs0._7.Orders>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Список заказов</h2>
+
+<table class="table">
+    <tr>
+        <th class="hidetouser">
+            Пользователь
+        </th>
+        <th>
+            Дата
+        </th>
+        <th>
+            Телефон
+        </th>
+        <th>
+           Состояние
+        </th>
+        <th>
+            Сумма
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td class="hidetouser">
+            @Html.DisplayFor(modelItem => item.Client)
+        </td>    
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Telephone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.States.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.ActionLink("Подробнее", "Details", new { id=item.Id }) 
+            @if (User.IsInRole("Manager") || User.IsInRole("Administrator"))
+            {
+                @Html.Display(" | ")@Html.ActionLink("Удалить", "Delete", new { id = item.Id })
+            }
+        </td>
+    </tr>
+}
+
+</table>

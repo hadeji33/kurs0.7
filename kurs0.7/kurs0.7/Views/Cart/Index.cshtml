@@ -1,0 +1,50 @@
+﻿@model kurs0._7.Models.CartIndexViewModel
+@{
+    ViewBag.Title = "Rорзина";
+}
+
+<h2>Корзина</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Кол-во</th>
+            <th>Материал</th>
+            <th>Цена</th>
+            <th>Общая цена</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var line in Model.Cart.Lines)
+        {
+            <tr>
+                <td class="text-center">@line.Quantity</td>
+                <td class="text-left">@line.material.Name</td>
+                <td class="text-right">@line.material.Price.ToString("# руб")</td>
+                <td class="text-right">
+                    @((line.material.Price * line.Quantity).ToString("# руб"))
+                </td>
+                <td>
+                    @using (Html.BeginForm("AddToCart", "Cart"))
+                    {
+                        @Html.ActionLink("Удалить", "RemoveFromCart", new { id = line.material.Id, returnUrl = Model.ReturnUrl }, new { @class = "btn btn-primary" })
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-right">Итого:</td>
+            <td class="text-right">
+                @Model.Cart.ComputeTotalValue().ToString("# руб")
+
+            </td>
+        </tr>
+    </tfoot>
+
+</table>
+
+<div class="text-center">
+    <a class="btn btn-primary" href="@Model.ReturnUrl">Продолжить покупки</a>
+    @Html.ActionLink("Оформить заказ", "Checkout", new { returnUrl = Model.ReturnUrl }, new { @class="btn btn-primary"})
+</div>

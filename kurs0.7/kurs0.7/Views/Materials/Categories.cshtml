@@ -1,0 +1,19 @@
+﻿@model IEnumerable<kurs0._7.Categories>
+
+@if (User.IsInRole("Administrator"))
+{
+    using (Html.BeginForm("Создать новую категорию", "Categories", FormMethod.Get))
+    {
+        <p>
+            <input type="submit" class="btn btn-link" value="Добавить категорию" />
+        </p>
+    }
+}
+<h3>Категории</h3>
+<ul style="font-size: 130%;">
+    <li>@Html.ActionLink("Все категории", "Index")</li>
+    @foreach (var item in Model)
+    {
+        <li>@Html.ActionLink(item.Name, "Index", new { id = item.Id })</li>
+    }
+</ul>

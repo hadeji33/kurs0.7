@@ -1,0 +1,4 @@
+﻿@model kurs0._7.Models.CartIndexViewModel
+<h2>Мой заказ</h2>
+<p>@Model.Cart.Lines.Sum(x => x.Quantity) товаров,</p>
+<p>На сумму @Model.Cart.ComputeTotalValue().ToString("# руб") </p> 

@@ -1,0 +1,88 @@
+﻿@model kurs0._7.Materials
+
+@{
+    ViewBag.Title = "Details";
+}
+@using Microsoft.AspNet.Identity
+
+<h2>@Html.DisplayFor(model => model.Name)</h2>
+
+<div>
+    <hr />
+    <div class="col-md-4">
+        <img src="@Html.DisplayFor(m => m.images)" style="width:100%" />
+    </div>
+    <div class="col-md-8">
+        <dl class="dl-horizontal">
+            <dt>
+                Наименование
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt>
+                Описание
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt>
+                Производитель
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Producer)
+            </dd>
+
+            <dt>
+                Единицы измерения
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Units)
+            </dd>
+
+            <dt>
+                Цена
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+
+            <dt>
+                На складе
+            </dt>
+
+            <dd>
+                @(Model.Count - Model.Reserved)
+            </dd>
+
+            <dt>
+                Категория
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Categories.Name)
+            </dd>
+
+        </dl>
+        @if (Request.IsAuthenticated)
+        {
+        <div style="float: left; margin-right: 5px;">
+            @using (Html.BeginForm("AddToCart", "Cart"))
+            {
+                @Html.ActionLink("Добавить в корзину", "../Cart/AddToCart", new { id = Model.Id, returnUrl = Request.Url.PathAndQuery, Count = Request.Url.PathAndQuery }, new { @class = "btn btn-primary" })
+            }
+        </div>
+        }
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("К списку материалов", "Index")
+</p>
